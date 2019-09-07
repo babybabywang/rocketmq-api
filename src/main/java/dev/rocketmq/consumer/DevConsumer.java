@@ -38,6 +38,7 @@ public class DevConsumer implements MessageListenerConcurrently {
 
     }
 
+    @Override
     public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> messages, ConsumeConcurrentlyContext consumeConcurrentlyContext) {
         if (CollectionUtils.isEmpty(messages)) {
             return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;

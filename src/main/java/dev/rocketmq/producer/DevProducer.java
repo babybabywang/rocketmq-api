@@ -5,9 +5,12 @@ import org.apache.rocketmq.client.producer.DefaultMQProducer;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.remoting.common.RemotingHelper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import static dev.rocketmq.constants.Constants.*;
+import static dev.rocketmq.constants.Constants.DEV_TAG;
+import static dev.rocketmq.constants.Constants.DEV_TOPIC;
 
 /**
  * @author echo huang
@@ -18,16 +21,18 @@ import static dev.rocketmq.constants.Constants.*;
 @Component
 @Slf4j
 public class DevProducer {
+
+    @Autowired
+    @Qualifier("default")
+    private DefaultMQProducer defaultMQProducer;
+
     public void send() {
 
         try {
-            DefaultMQProducer producer = new DefaultMQProducer(PRODUCER_GROUP);
-            producer.setNamesrvAddr(SINGLE_NAME_SERVER);
             Message message = new Message(DEV_TOPIC, DEV_TAG, "zhangsanlisiwangwu".getBytes(RemotingHelper.DEFAULT_CHARSET));
-            producer.start();
-            SendResult send = producer.send(message);
+            SendResult send = defaultMQProducer.send(message);
             log.info("{}", send);
-            producer.shutdown();
+            defaultMQProducer.shutdown();
         } catch (Exception e) {
             log.error("exception:", e);
         }

@@ -13,4 +13,5 @@ public class Constants {
     public static final String DEV_TAG = "*";
     public static final String CONSUMER_GROUP = "dev-consumer-group";
     public static final String PRODUCER_GROUP = "dev-producer-group";
+    public static final String ASYNC_PRODUCER_GROUP = "async-dev-producer-group";
 }
