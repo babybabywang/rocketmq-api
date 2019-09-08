@@ -1,4 +1,4 @@
-package dev.rocketmq.producer;
+package dev.rocketmq.producer.delay;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
@@ -15,26 +15,28 @@ import static dev.rocketmq.constants.Constants.DEV_TOPIC;
 /**
  * @author echo huang
  * @version 1.0
- * @date 2019-09-06 23:36
- * @description 生产者
+ * @date 2019-09-08 15:42
+ * @description 延迟队列生产者
  */
 @Component
 @Slf4j
-public class DevProducer {
+public class DelayProducer {
 
     @Autowired
-    @Qualifier("default")
-    private DefaultMQProducer defaultMQProducer;
+    @Qualifier("delay")
+    private DefaultMQProducer producer;
 
-    public void send() {
-
+    public void delaySend() {
         try {
-            Message message = new Message(DEV_TOPIC, DEV_TAG, "zhangsanlisiwangwu".getBytes(RemotingHelper.DEFAULT_CHARSET));
-            SendResult send = defaultMQProducer.send(message);
-            log.info("{}", send);
+            Message message = new Message(DEV_TOPIC, DEV_TAG, "delay message".getBytes(RemotingHelper.DEFAULT_CHARSET));
+            //延迟5s
+            message.setDelayTimeLevel(5);
+            SendResult sendResult = producer.send(message);
+            log.info("sendResult:{}", sendResult);
         } catch (Exception e) {
-            log.error("exception:", e);
+            log.error("ERROR:", e);
         }
 
     }
 }
+

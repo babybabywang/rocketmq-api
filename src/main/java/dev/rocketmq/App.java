@@ -1,6 +1,8 @@
 package dev.rocketmq;
 
 import dev.rocketmq.producer.DevProducer;
+import dev.rocketmq.producer.delay.DelayProducer;
+import dev.rocketmq.producer.rule.RuleProducer;
 import dev.rocketmq.producer.sync.AsyncProducer;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.remoting.exception.RemotingException;
@@ -32,6 +34,12 @@ public class App {
     @Autowired
     private AsyncProducer producer;
 
+    @Autowired
+    private RuleProducer ruleProducer;
+
+    @Autowired
+    DelayProducer delayProducer;
+
     @GetMapping("send")
     public void send() {
         devProducer.send();
@@ -44,5 +52,15 @@ public class App {
         } catch (RemotingException | MQClientException | InterruptedException | UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+    }
+
+    @GetMapping("delay")
+    public void delay() {
+        devProducer.send();
+    }
+
+    @GetMapping("rule")
+    public void rule() {
+        ruleProducer.ruleSend();
     }
 }

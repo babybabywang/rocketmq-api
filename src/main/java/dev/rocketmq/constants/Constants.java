@@ -14,4 +14,6 @@ public class Constants {
     public static final String CONSUMER_GROUP = "dev-consumer-group";
     public static final String PRODUCER_GROUP = "dev-producer-group";
     public static final String ASYNC_PRODUCER_GROUP = "async-dev-producer-group";
+    public static final String DELAY_PRODUCER_GROUP = "delay-dev-producer-group";
+    public static final String RULE_PRODUCER_GROUP = "rule-dev-producer-group";
 }
