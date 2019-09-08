@@ -9,8 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import static dev.rocketmq.constants.Constants.DEV_TAG;
-import static dev.rocketmq.constants.Constants.DEV_TOPIC;
+import static dev.rocketmq.constants.Constants.*;
 
 /**
  * @author echo huang
@@ -29,7 +28,7 @@ public class DevProducer {
     public void send() {
 
         try {
-            Message message = new Message(DEV_TOPIC, DEV_TAG, "zhangsanlisiwangwu".getBytes(RemotingHelper.DEFAULT_CHARSET));
+            Message message = new Message(DEV_PULL_TOPIC, DEV_TAG, "zhangsanlisiwangwu".getBytes(RemotingHelper.DEFAULT_CHARSET));
             SendResult send = defaultMQProducer.send(message);
             log.info("{}", send);
         } catch (Exception e) {
