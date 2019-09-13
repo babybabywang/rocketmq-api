@@ -2,8 +2,12 @@ package dev.rocketmq.producer;
 
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
+import org.apache.rocketmq.client.producer.TransactionMQProducer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static dev.rocketmq.constants.Constants.*;
 
@@ -18,6 +22,7 @@ import static dev.rocketmq.constants.Constants.*;
 public class DefaultRocketConfig {
     /**
      * 默认生产者
+     *
      * @return
      * @throws MQClientException
      */
@@ -31,6 +36,7 @@ public class DefaultRocketConfig {
 
     /**
      * 异步生产者
+     *
      * @return
      * @throws MQClientException
      */
@@ -45,6 +51,7 @@ public class DefaultRocketConfig {
 
     /**
      * 延迟生产者
+     *
      * @return
      * @throws MQClientException
      */
@@ -59,6 +66,7 @@ public class DefaultRocketConfig {
 
     /**
      * 规则生产者
+     *
      * @return
      * @throws MQClientException
      */
@@ -69,6 +77,22 @@ public class DefaultRocketConfig {
         producer.setProducerGroup(RULE_PRODUCER_GROUP);
         producer.start();
         return producer;
+    }
+
+
+    /**
+     * 事务消息生产者
+     *
+     * @return
+     * @throws MQClientException
+     */
+    @Bean("transaction")
+    public TransactionMQProducer transactionMQProducer()  {
+        ExecutorService executorService = Executors.newFixedThreadPool(10);
+        TransactionMQProducer transactionMQProducer = new TransactionMQProducer(TRANSACTION_GROUP);
+        transactionMQProducer.setExecutorService(executorService);
+        transactionMQProducer.setNamesrvAddr(SINGLE_NAME_SERVER);
+        return transactionMQProducer;
     }
 
 

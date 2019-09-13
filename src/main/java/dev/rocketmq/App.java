@@ -4,6 +4,7 @@ import dev.rocketmq.producer.DevProducer;
 import dev.rocketmq.producer.delay.DelayProducer;
 import dev.rocketmq.producer.rule.RuleProducer;
 import dev.rocketmq.producer.sync.AsyncProducer;
+import dev.rocketmq.producer.transaction.TransactionProducer;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.remoting.exception.RemotingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,9 @@ public class App {
     @Autowired
     DelayProducer delayProducer;
 
+    @Autowired
+    private TransactionProducer transactionProducer;
+
     @GetMapping("send")
     public void send() {
         devProducer.send();
@@ -62,5 +66,10 @@ public class App {
     @GetMapping("rule")
     public void rule() {
         ruleProducer.ruleSend();
+    }
+
+    @GetMapping("tx")
+    public void tx() {
+        transactionProducer.txSend();
     }
 }
