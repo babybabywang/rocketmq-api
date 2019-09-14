@@ -6,7 +6,6 @@ import org.apache.rocketmq.client.consumer.listener.ConsumeOrderlyContext;
 import org.apache.rocketmq.client.consumer.listener.ConsumeOrderlyStatus;
 import org.apache.rocketmq.client.consumer.listener.MessageListenerOrderly;
 import org.apache.rocketmq.common.message.MessageExt;
-import org.apache.rocketmq.common.protocol.heartbeat.MessageModel;
 import org.apache.rocketmq.remoting.common.RemotingHelper;
 import org.springframework.stereotype.Component;
 
@@ -32,7 +31,6 @@ public class OrderConsumer implements MessageListenerOrderly {
         DefaultMQPushConsumer consumer = new DefaultMQPushConsumer(ORDER_CONSUMER_GROUP);
         consumer.setNamesrvAddr(SINGLE_NAME_SERVER);
         consumer.setMessageListener(this);
-        consumer.setMessageModel(MessageModel.CLUSTERING);
         consumer.subscribe(ORDER_TOPIC, DEV_TAG);
         consumer.start();
     }
@@ -43,7 +41,7 @@ public class OrderConsumer implements MessageListenerOrderly {
         consumeOrderlyContext.setAutoCommit(true);
         for (MessageExt messageExt : messageExts) {
             try {
-                log.info("message:{}", new String(messageExt.getBody(), RemotingHelper.DEFAULT_CHARSET));
+                log.info("queueId:{},message:{}", messageExt.getQueueId(), new String(messageExt.getBody(), RemotingHelper.DEFAULT_CHARSET));
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }

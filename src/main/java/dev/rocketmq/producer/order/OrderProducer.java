@@ -8,7 +8,6 @@ import org.apache.rocketmq.remoting.common.RemotingHelper;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.time.LocalDateTime;
 
 import static dev.rocketmq.constants.Constants.*;
 
@@ -28,19 +27,25 @@ public class OrderProducer {
 
     public void send() {
         try {
-            String dateStr = LocalDateTime.now().toString();
-            for (int i = 0; i < 10; i++) {
-                String body = dateStr + " Hello Test" + i;
+            for (int i = 0; i < 3; i++) {
+                String body =  "1下单成功";
                 Message msg = new Message(ORDER_TOPIC, DEV_TAG, DEV_KEY + i, body.getBytes(RemotingHelper.DEFAULT_CHARSET));
                 SendResult send = producer.send(msg, (list, message, args) -> {
-                    int queueNum = (int) args % 4;
+                    int queueNum = (int) args;
                     return list.get(queueNum);
-                }, i);
+                }, 1);
                 log.info("result:{}", send);
+                String body1 =  "2下单成功";
+                Message msg1 = new Message(ORDER_TOPIC, DEV_TAG, DEV_KEY + i, body1.getBytes(RemotingHelper.DEFAULT_CHARSET));
+                SendResult send1 = producer.send(msg1, (list, message, args) -> {
+                    int queueNum = (int) args;
+                    return list.get(queueNum);
+                }, 2);
+                log.info("result:{}", send1);
             }
         } catch (Exception e) {
             log.error("e", e);
         }
-
     }
+
 }
