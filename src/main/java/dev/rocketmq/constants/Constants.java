@@ -19,8 +19,11 @@ public class Constants {
     public static final String ASYNC_PRODUCER_GROUP = "async-dev-producer-group";
     public static final String DELAY_PRODUCER_GROUP = "delay-dev-producer-group";
     public static final String RULE_PRODUCER_GROUP = "rule-dev-producer-group";
+    public static final String ORDER_PRODUCER_GROUP = "order-dev-producer-group";
     public static final String TRANSACTION_GROUP = "transaction-group";
     public static final String DEV_KEY = "key";
     public static final String TX_TOPIC="tx_topic";
     public static final String TX_CONSUMER_GROUP = "tx-consumer-group";
+    public static final String ORDER_TOPIC="order_topic";
+    public static final String ORDER_CONSUMER_GROUP = "order-consumer-group";
 }

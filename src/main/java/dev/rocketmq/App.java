@@ -2,6 +2,7 @@ package dev.rocketmq;
 
 import dev.rocketmq.producer.DevProducer;
 import dev.rocketmq.producer.delay.DelayProducer;
+import dev.rocketmq.producer.order.OrderProducer;
 import dev.rocketmq.producer.rule.RuleProducer;
 import dev.rocketmq.producer.sync.AsyncProducer;
 import dev.rocketmq.producer.transaction.TransactionProducer;
@@ -44,6 +45,9 @@ public class App {
     @Autowired
     private TransactionProducer transactionProducer;
 
+    @Autowired
+    private OrderProducer orderProducer;
+
     @GetMapping("send")
     public void send() {
         devProducer.send();
@@ -71,5 +75,10 @@ public class App {
     @GetMapping("tx")
     public void tx() {
         transactionProducer.txSend();
+    }
+
+    @GetMapping("order")
+    public void order() {
+        orderProducer.send();
     }
 }

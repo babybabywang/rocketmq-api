@@ -95,5 +95,20 @@ public class DefaultRocketConfig {
         return transactionMQProducer;
     }
 
+    /**
+     * 顺序生产者
+     *
+     * @return
+     * @throws MQClientException
+     */
+    @Bean("order")
+    public DefaultMQProducer order() throws MQClientException {
+        DefaultMQProducer producer = new DefaultMQProducer();
+        producer.setNamesrvAddr(SINGLE_NAME_SERVER);
+        producer.setProducerGroup(ORDER_PRODUCER_GROUP);
+        producer.start();
+        return producer;
+    }
+
 
 }
