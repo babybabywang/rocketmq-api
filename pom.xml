@@ -27,7 +27,7 @@
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <rocketmq.version>4.5.2</rocketmq.version>
-        <gauva.version>27.0.1-jre</gauva.version>
+        <gauva.version>29.0-jre</gauva.version>
         <common.beanutils.version>1.9.3</common.beanutils.version>
         <lombok.version>1.18.8</lombok.version>
     </properties>
